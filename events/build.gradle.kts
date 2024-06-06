@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("maven-publish")
 }
 
 android {
@@ -36,16 +37,21 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.jakewharton.timber)
     implementation(libs.joda.time)
     implementation(libs.com.squareup.retrofit2.converter.gson)
     implementation(libs.google.dagger.hilt.android)
+}
 
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components["release"])
+                groupId = "com.advtechgrp.commends" // Customize this
+                artifactId = "events" // Customize this
+                version = "1.0.1" // Customize this
+            }
+        }
+    }
 }
