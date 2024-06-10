@@ -4,25 +4,29 @@ import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import com.advtechgrp.settings.CommonSettingsLocalDataSource
+import com.advtechgrp.commends.settings.CommonSettingsLocalDataSourceImpl
+import com.advtechgrp.commends.settings.SettingsContentProviderLocalDataSource
 import com.google.gson.GsonBuilder
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.joda.time.DateTime
 import timber.log.Timber
 import java.util.UUID
 import javax.inject.Inject
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 interface EventsLocalDataSource {
     suspend fun insert(name: String, data: String, correlationId: String)
     suspend fun insert(name: String, data: Any)
+    fun insertEvent(name: String, data: String, correlationId: String)
+    fun insertEvent(name: String, data: Any)
 }
 
 class EventsLocalDataSourceImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val commonSettings: CommonSettingsLocalDataSource,
+    private val context: Context,
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ) : EventsLocalDataSource {
 
@@ -30,6 +34,12 @@ class EventsLocalDataSourceImpl @Inject constructor(
     private val _tableName = "events"
     private val _contentUriBase = Uri.parse("content://$_authority")
     private val _contentUri = Uri.withAppendedPath(_contentUriBase, _tableName)
+    private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    private val commonSettings = CommonSettingsLocalDataSourceImpl(
+        SettingsContentProviderLocalDataSource(context, dispatcherIO),
+        context,
+        dispatcherIO
+    )
 
     object Columns {
         const val UNIQUE_ID = "uniqueId"
@@ -94,6 +104,22 @@ class EventsLocalDataSourceImpl @Inject constructor(
             Timber.i(json)
         } catch (t: Throwable) {
             Timber.e(t, "Error inserting event")
+        }
+    }
+
+    override fun insertEvent(name: String, data: String, correlationId: String) {
+        executor.execute {
+            runBlocking {
+                insert(name, data, correlationId)
+            }
+        }
+    }
+
+    override fun insertEvent(name: String, data: Any) {
+        executor.execute {
+            runBlocking {
+                insert(name, data)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.advtechgrp.settings
+package com.advtechgrp.commends.settings
 
 import android.annotation.SuppressLint
 import android.content.ContentProviderClient
@@ -85,7 +85,7 @@ class SettingsContentProviderLocalDataSource @Inject constructor(
 
 class CommonSettingsLocalDataSourceImpl @Inject constructor(
     private val settingsLocalDatasource: SettingsLocalDatasource,
-    @ApplicationContext private val context: Context,
+    private val context: Context,
     private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ) : CommonSettingsLocalDataSource {
 

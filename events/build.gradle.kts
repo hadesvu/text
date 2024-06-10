@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 19
         version = 1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -50,7 +50,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.advtechgrp.commends" // Customize this
                 artifactId = "events" // Customize this
-                version = "1.0.1" // Customize this
+                version = "1.0.3" // Customize this
             }
         }
     }
