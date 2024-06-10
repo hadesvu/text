@@ -7,7 +7,6 @@ import android.os.Build
 import com.advtechgrp.commends.settings.CommonSettingsLocalDataSourceImpl
 import com.advtechgrp.commends.settings.SettingsContentProviderLocalDataSource
 import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -27,7 +26,6 @@ interface EventsLocalDataSource {
 
 class EventsLocalDataSourceImpl @Inject constructor(
     private val context: Context,
-    private val dispatcherIO: CoroutineDispatcher = Dispatchers.IO
 ) : EventsLocalDataSource {
 
     private val _authority = "com.advtechgrp.operations.events.provider"
@@ -35,6 +33,7 @@ class EventsLocalDataSourceImpl @Inject constructor(
     private val _contentUriBase = Uri.parse("content://$_authority")
     private val _contentUri = Uri.withAppendedPath(_contentUriBase, _tableName)
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
+    private val dispatcherIO = Dispatchers.IO
     private val commonSettings = CommonSettingsLocalDataSourceImpl(
         SettingsContentProviderLocalDataSource(context, dispatcherIO),
         context,

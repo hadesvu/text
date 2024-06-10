@@ -50,7 +50,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.advtechgrp.commends" // Customize this
                 artifactId = "events" // Customize this
-                version = "1.0.3" // Customize this
+                version = "1.0.4" // Customize this
             }
         }
     }
