@@ -1,4 +1,4 @@
-package com.advtechgrp.commends.settings
+package com.advtechgrp.common.settings
 
 import android.annotation.SuppressLint
 import android.content.ContentProviderClient
@@ -8,7 +8,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import com.advtechgrp.commends.events.BuildConfig
+import com.advtechgrp.common.events.BuildConfig
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

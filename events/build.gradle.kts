@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.advtechgrp.commends.events"
+    namespace = "com.advtechgrp.common.events"
     compileSdk = 34
 
     defaultConfig {
@@ -56,9 +56,9 @@ afterEvaluate {
         publications {
             create<MavenPublication>("release") {
                 from(components["release"])
-                groupId = "com.advtechgrp.commends" // Customize this
+                groupId = "com.advtechgrp.common" // Customize this
                 artifactId = "events" // Customize this
-                version = "1.0.5" // Customize this
+                version = "1.0.0" // Customize this
             }
         }
     }

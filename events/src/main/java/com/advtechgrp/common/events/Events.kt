@@ -1,11 +1,11 @@
-package com.advtechgrp.commends.events
+package com.advtechgrp.common.events
 
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import com.advtechgrp.commends.settings.CommonSettingsLocalDataSourceImpl
-import com.advtechgrp.commends.settings.SettingsContentProviderLocalDataSource
+import com.advtechgrp.common.settings.CommonSettingsLocalDataSourceImpl
+import com.advtechgrp.common.settings.SettingsContentProviderLocalDataSource
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
