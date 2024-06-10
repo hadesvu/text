@@ -9,7 +9,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        minSdk = 19
+        minSdk = 21
         version = 1
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -33,6 +33,10 @@ android {
     }
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
 }
 
@@ -41,6 +45,10 @@ dependencies {
     implementation(libs.joda.time)
     implementation(libs.com.squareup.retrofit2.converter.gson)
     implementation(libs.google.dagger.hilt.android)
+    implementation (libs.androidx.ui)
+    implementation (libs.androidx.material)
+    implementation (libs.ui.tooling)
+    implementation (libs.androidx.runtime.livedata)
 }
 
 afterEvaluate {
@@ -50,7 +58,7 @@ afterEvaluate {
                 from(components["release"])
                 groupId = "com.advtechgrp.commends" // Customize this
                 artifactId = "events" // Customize this
-                version = "1.0.4" // Customize this
+                version = "1.0.5" // Customize this
             }
         }
     }
